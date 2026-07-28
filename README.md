@@ -1,16 +1,100 @@
-# React + Vite
+# 性格与职业测评平台
 
-This template provides a minimal setup to get React working in Vite with HMR and some Oxlint rules.
+一个基于 React 的全栈前端性格与职业测评网站，涵盖 MBTI、九型人格、大五人格等主流性格测评以及职业兴趣、职业价值观、职业技能倾向等职业测评，提供测评记录追踪、性格变化趋势分析、综合职业匹配分析等功能。
 
-Currently, two official plugins are available:
+## 功能特性
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+### 测评体系
 
-## React Compiler
+**性格测评（5 套）**
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+| 测评 | 题目数 | 维度/类型 |
+|------|--------|-----------|
+| MBTI | 20 题 | E/I、S/N、T/F、J/P |
+| 九型人格 | 18 题 | 1-9 号人格类型 |
+| 大五人格 (BFI) | 20 题 | 开放性、尽责性、外向性、宜人性、神经质 |
+| DISC | 16 题 | D/I/S/C 四种行为风格 |
+| 霍兰德 | 18 题 | R/I/A/S/E/C 六种兴趣类型 |
 
-## Expanding the Oxlint configuration
+**职业测评（3 套）**
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and Oxlint's TypeScript related rules in your project.
+| 测评 | 题目数 | 维度 |
+|------|--------|------|
+| 职业兴趣 | 12 题 | 事务型、研究型、创业型、社交型、艺术型、自然型 |
+| 职业价值观 | 12 题 | 成就感、独立自主、社会贡献、工作环境、经济回报、稳定性 |
+| 职业技能倾向 | 12 题 | 分析思维、创造力、领导力、执行力、沟通力、技术力 |
+
+### 核心功能
+
+- **关系图谱** — SVG 可视化展示 8 套测评之间的关联关系
+- **答题流程** — 进度条 + 题目导航 + 提交确认
+- **结果展示** — 各测评专属结果页（维度条形图、雷达图、排名列表等）
+- **历史记录** — 按日期分组，支持筛选、删除、导出/导入 JSON
+- **变化趋势** — 追踪同一测评多次记录的分数变化
+- **综合职业分析** — 多维度加权匹配，推荐 Top 10 职业并给出匹配度百分比
+- **当前职业分析** — 输入当前职业，输出 4 级匹配度评估与个性化建议
+- **数据持久化** — 基于 localStorage，无需后端服务器
+
+## 技术栈
+
+- **框架**: React 19
+- **路由**: React Router DOM 7
+- **构建**: Vite 5
+- **样式**: 纯 CSS
+- **存储**: localStorage
+
+## 项目结构
+
+```
+src/
+├── App.jsx                          # 路由配置
+├── main.jsx                         # 应用入口
+├── index.css                        # 全局样式
+├── components/
+│   ├── HomePage.jsx                 # 首页（测评入口 + 关系图谱）
+│   ├── AssessmentTaking.jsx         # 答题页面
+│   ├── AssessmentResult.jsx         # 结果展示页面
+│   ├── HistoryPage.jsx              # 历史记录
+│   └── ComprehensiveAnalysis.jsx    # 综合职业分析
+├── data/
+│   ├── assessments.js               # 8 套测评题库、计分逻辑、图谱数据
+│   └── careerMapping.js             # MBTI→职业映射、综合匹配分析
+├── utils/
+│   └── storage.js                   # localStorage 封装（读写/导出/导入）
+└── assets/                          # 静态资源
+```
+
+## 本地运行
+
+### 环境要求
+
+- Node.js >= 18
+
+### 安装与启动
+
+```bash
+# 安装依赖
+npm install
+
+# 启动开发服务器
+npm run dev
+
+# 构建生产版本
+npm run build
+
+# 预览生产构建
+npm run preview
+```
+
+启动后访问 `http://localhost:5173` 即可使用。
+
+## 使用说明
+
+1. 首页选择任意测评开始答题
+2. 完成答题后查看结果
+3. 前往「历史记录」查看/导出过往测评记录
+4. 完成多套测评后，前往「综合分析」获取职业匹配建议
+
+## License
+
+MIT
