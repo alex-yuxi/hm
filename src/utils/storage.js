@@ -108,5 +108,62 @@ export function importData(data) {
     localStorage.setItem(`${STORAGE_PREFIX}${id}`, JSON.stringify(records));
   });
   localStorage.setItem(`${STORAGE_PREFIX}all`, JSON.stringify(data.records));
+  if (data.tarotReadings && Array.isArray(data.tarotReadings)) {
+    localStorage.setItem(`${STORAGE_PREFIX}tarot`, JSON.stringify(data.tarotReadings));
+  }
   return true;
+}
+
+// ==================== 塔罗牌占卜记录 ====================
+
+const TAROT_KEY = `${STORAGE_PREFIX}tarot`;
+
+// 保存一次占卜记录
+export function saveTarotReading(reading) {
+  const records = getTarotReadings();
+  const record = {
+    id: Date.now().toString(36) + Math.random().toString(36).slice(2, 8),
+    ...reading,
+  };
+  records.push(record);
+  localStorage.setItem(TAROT_KEY, JSON.stringify(records));
+
+  // 同步进入全局记录（与测评记录共用历史列表）
+  const allRecords = getAllRecords();
+  allRecords.push({
+    id: record.id,
+    assessmentId: 'tarot',
+    isTarot: true,
+    type: record.spreadName,
+    result: {
+      isTarot: true,
+      spreadName: record.spreadName,
+      purposeName: record.purposeName,
+      cards: record.cards,
+    },
+    timestamp: record.timestamp,
+    date: record.date,
+    time: record.time,
+  });
+  localStorage.setItem(`${STORAGE_PREFIX}all`, JSON.stringify(allRecords));
+  return record;
+}
+
+// 获取所有塔罗占卜记录
+export function getTarotReadings() {
+  const data = localStorage.getItem(TAROT_KEY);
+  return data ? JSON.parse(data) : [];
+}
+
+// 按占卜目的筛选
+export function getTarotReadingsByPurpose(purposeId) {
+  return getTarotReadings().filter(r => r.purposeId === purposeId);
+}
+
+// 删除某条占卜记录
+export function deleteTarotReading(recordId) {
+  const records = getTarotReadings().filter(r => r.id !== recordId);
+  localStorage.setItem(TAROT_KEY, JSON.stringify(records));
+  const all = getAllRecords().filter(r => r.id !== recordId);
+  localStorage.setItem(`${STORAGE_PREFIX}all`, JSON.stringify(all));
 }

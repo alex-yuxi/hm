@@ -22,6 +22,8 @@ import AssessmentTaking from './components/AssessmentTaking';
 import AssessmentResult from './components/AssessmentResult';
 import HistoryPage from './components/HistoryPage';
 import ComprehensiveAnalysis from './components/ComprehensiveAnalysis';
+import TarotPage from './components/TarotPage';
+import TarotHistory from './components/TarotHistory';
 import { getAssessmentById } from './data/assessments';
 import './index.css';
 
@@ -39,6 +41,7 @@ function Navbar() {
         </button>
         <div className={`nav-links ${menuOpen ? 'open' : ''}`}>
           <Link to="/" onClick={() => setMenuOpen(false)}>首页</Link>
+          <Link to="/tarot" onClick={() => setMenuOpen(false)}>塔罗占卜</Link>
           <Link to="/history" onClick={() => setMenuOpen(false)}>测评记录</Link>
           <Link to="/analysis" onClick={() => setMenuOpen(false)}>综合分析</Link>
         </div>
@@ -73,6 +76,8 @@ function App() {
             <Route path="/" element={<HomePage />} />
             <Route path="/assessment/:id" element={<AssessmentTakingWrapper />} />
             <Route path="/result/:id/:recordId" element={<AssessmentResult />} />
+            <Route path="/tarot" element={<TarotPage />} />
+            <Route path="/tarot-history" element={<TarotHistory />} />
             <Route path="/history" element={<HistoryPage />} />
             <Route path="/analysis" element={<ComprehensiveAnalysis />} />
           </Routes>

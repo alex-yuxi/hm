@@ -80,6 +80,7 @@ export default function HistoryPage() {
   }
 
   const filtered = filter === 'all' ? records : records.filter(r => {
+    if (r.isTarot) return false;
     const a = getAssessmentById(r.assessmentId);
     return a && a.category === filter;
   });
@@ -94,6 +95,7 @@ export default function HistoryPage() {
 
   function getResultSummary(record) {
     const r = record.result;
+    if (r.isTarot) return `${r.purposeName} · ${r.cards?.length || 0}张牌`;
     if (r.type) return r.type;
     if (r.primaryType) return r.primaryType;
     if (r.result?.[0]?.dimension) return r.result.map(d => `${d.dimension}:${d.level === 'high' ? '高' : '低'}`).join(', ');
@@ -157,7 +159,11 @@ export default function HistoryPage() {
                         </div>
                       </div>
                       <div className="history-card-mid">
-                        <span className={`h-category ${a.category}`}>{a.category === 'personality' ? '性格' : '职业'}</span>
+                        {record.isTarot ? (
+                          <span className="h-category tarot">塔罗</span>
+                        ) : (
+                          <span className={`h-category ${a.category}`}>{a.category === 'personality' ? '性格' : '职业'}</span>
+                        )}
                         <span className="h-result">{getResultSummary(record)}</span>
                       </div>
                       <div className="history-card-right">

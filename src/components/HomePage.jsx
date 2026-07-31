@@ -210,7 +210,14 @@ export default function HomePage() {
 
         {/* 快速入口 */}
         <section className="quick-actions">
-          <Link to="/analysis" className="quick-btn primary">
+          <Link to="/tarot" className="quick-btn primary">
+            <span className="quick-icon">🔮</span>
+            <div>
+              <strong>塔罗牌占卜</strong>
+              <span>选择阵法与目的，洞察当下指引</span>
+            </div>
+          </Link>
+          <Link to="/analysis" className="quick-btn secondary">
             <span className="quick-icon">🔬</span>
             <div>
               <strong>综合分析</strong>
@@ -224,6 +231,52 @@ export default function HomePage() {
               <span>回顾不同时期的性格变化</span>
             </div>
           </Link>
+        </section>
+
+        {/* 塔罗牌入口卡片 */}
+        <section className="category-section">
+          <h2 className="section-title">🔮 塔罗牌占卜</h2>
+          <p className="section-subtitle">在静心中抽牌，获得关于感情、事业、抉择等方面的指引与解读</p>
+          <div className="cards-grid">
+            <div
+              className="assessment-card"
+              style={{ borderTopColor: '#7c3aed', cursor: 'pointer' }}
+              onClick={() => window.location.href = '/tarot'}
+            >
+              <div className="card-header">
+                <span className="card-icon" style={{ background: '#7c3aed20', color: '#7c3aed' }}>🔮</span>
+              </div>
+              <h3 className="card-title">开始一次塔罗占卜</h3>
+              <p className="card-desc">支持单张牌、三张牌、凯尔特十字、感情阵、抉择阵、年度阵等主流阵法，可记录占卜目的与解读。</p>
+              <div className="card-meta">
+                <span className="meta-item">🃏 6 种阵法</span>
+                <span className="meta-item">🎯 7 类目的</span>
+              </div>
+              <Link to="/tarot" className="btn-card" style={{ background: '#7c3aed' }}>
+                进入占卜
+                <span className="btn-arrow">→</span>
+              </Link>
+            </div>
+            <div
+              className="assessment-card"
+              style={{ borderTopColor: '#db2777', cursor: 'pointer' }}
+              onClick={() => window.location.href = '/tarot-history'}
+            >
+              <div className="card-header">
+                <span className="card-icon" style={{ background: '#db277720', color: '#db2777' }}>📖</span>
+              </div>
+              <h3 className="card-title">占卜历史</h3>
+              <p className="card-desc">按日期与占卜目的回顾每一次抽牌的结果与解读，可随时删除某条记录。</p>
+              <div className="card-meta">
+                <span className="meta-item">🕒 时间记录</span>
+                <span className="meta-item">🗑 可删除</span>
+              </div>
+              <Link to="/tarot-history" className="btn-card" style={{ background: '#db2777' }}>
+                查看历史
+                <span className="btn-arrow">→</span>
+              </Link>
+            </div>
+          </div>
         </section>
       </div>
     </div>
